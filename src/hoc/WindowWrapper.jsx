@@ -11,10 +11,23 @@ const WindowWrapper = (Component, windowKey) => {
 
     useGSAP(() => {
       const el = ref.current;
-      if(!el || !isOpen) return;
+      if(!el) return;
 
-      el.style.display = "block"
-      gsap.fromTo(el, { scale:0.8, opacity: 0, y:40}, {scale: 1, opacity: 1, y: 0, duration: 0.2, ease: "power3.out" })
+      if (isOpen) {
+        el.style.display = "block"
+        gsap.fromTo(el, { scale:0.8, opacity: 0, y:40}, {scale: 1, opacity: 1, y: 0, duration: 0.2, ease: "power3.out" })
+      } else if (el.style.display !== "none") {
+        gsap.to(el, {
+          scale: 0.8,
+          opacity: 0,
+          y: 40,
+          duration: 0.2,
+          ease: "power3.in",
+          onComplete: () => {
+            el.style.display = "none"
+          }
+        })
+      }
     }, [isOpen]);
 
     useGSAP(() => {
@@ -31,7 +44,9 @@ const WindowWrapper = (Component, windowKey) => {
     useLayoutEffect(() => {
       const el = ref.current;
       if (!el) return;
-      el.style.display = isOpen ? "block" : "none";
+      if (isOpen) {
+        el.style.display = "block";
+      }
     }, [isOpen])
 
     return <section
