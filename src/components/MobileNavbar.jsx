@@ -12,6 +12,9 @@ const MobileNavbar = () => {
     const iconClassName = hasOpenWindow
         ? "w-5 h-5 dark:invert"
         : "w-5 h-5 invert dark:invert";
+    const timeClassName = hasOpenWindow
+        ? "text-black dark:text-white font-semibold text-base"
+        : "text-white dark:text-white font-semibold text-base";
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -36,7 +39,7 @@ const MobileNavbar = () => {
         <nav className="sm:hidden fixed top-0 left-0 right-0 h-10 flex items-center justify-between px-8 z-[3000] bg-transparent backdrop-blur-none pointer-events-none">
             {/* Left side: Time */}
             <div className="flex items-center pointer-events-auto">
-                <time className="text-black dark:text-white font-semibold text-base">
+                <time className={timeClassName}>
                     {currentTime.format("h:mm")}
                 </time>
             </div>
