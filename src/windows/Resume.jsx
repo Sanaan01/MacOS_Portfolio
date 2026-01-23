@@ -1,6 +1,7 @@
 import WindowWrapper from "#hoc/WindowWrapper.jsx";
 import {WindowControls} from "#components/index.js";
 import {Download} from "lucide-react";
+import { useEffect, useState } from "react";
 import { Page, Document, pdfjs } from 'react-pdf';
 
 import 'react-pdf/dist/Page/AnnotationLayer.css';
@@ -11,6 +12,21 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 const Resume = () => {
+  const [pageWidth, setPageWidth] = useState(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setPageWidth(window.innerWidth);
+      } else {
+        setPageWidth(null);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <>
       <div id="window-header">
@@ -33,7 +49,7 @@ const Resume = () => {
             pageNumber={1}
             renderTextLayer
             renderAnnotationLayer
-            width={window.innerWidth < 640 ? window.innerWidth : undefined}
+            width={pageWidth ?? undefined}
           />
         </Document>
       </div>

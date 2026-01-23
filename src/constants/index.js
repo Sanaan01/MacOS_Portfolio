@@ -81,21 +81,21 @@ const blogPosts = [
         title:
             "Coming soon.",
         image: "/images/comingsoon.png",
-        link: "sanaan.dev",
+        link: "https://sanaan.dev",
     },
     {
         id: 2,
         date: "Aug 28, 2025",
         title: "Coming soon.",
         image: "/images/comingsoon.png",
-        link: "sanaan.dev",
+        link: "https://sanaan.dev",
     },
     {
         id: 3,
         date: "Aug 15, 2025",
         title: "Coming soon.",
         image: "/images/comingsoon.png",
-        link: "sanaan.dev",
+        link: "https://sanaan.dev",
     },
 ];
 
@@ -110,7 +110,7 @@ const techStack = [
     },
     {
         category: "3D Animation",
-        items: ["After Affects", "Blender"],
+        items: ["After Effects", "Blender"],
     },
 
     {
@@ -119,7 +119,7 @@ const techStack = [
     },
     {
         category: "Programming Languages",
-        items: ["Python" ," JaveScript", "C#"],
+        items: ["Python", "JavaScript", "C#"],
     },
 ];
 

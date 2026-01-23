@@ -8,7 +8,7 @@ const Dock = () => {
   const openWindow = useWindowStore((state) => state.openWindow);
   const closeWindow = useWindowStore((state) => state.closeWindow);
   const dockRef = useRef(null);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+  const [isMobile, setIsMobile] = useState(false);
 
   // --- ICON SIZE CONFIGURATION ---
   // Change these values to manually adjust the icon sizes
@@ -18,6 +18,7 @@ const Dock = () => {
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 640);
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);

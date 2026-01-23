@@ -25,10 +25,11 @@ const mobileApps = [
 const Home = () => {
   const setActiveLocation = useLocationStore((state) => state.setActiveLocation);
   const openWindow = useWindowStore((state) => state.openWindow);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 640);
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);

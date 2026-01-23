@@ -19,7 +19,7 @@ const Finder = () => {
     openWindow(`${item.fileType}${item.kind}`, item)
   };
 
-  const renderList = (name, items) => (
+  const renderList = (items) => (
     items.map((item) => (
       <li
         key={item.id}
@@ -46,11 +46,11 @@ const Finder = () => {
         <div className="sidebar">
           <h3 className="tracking-wider">Favourites</h3>
           <ul>
-            {renderList("Favourites", Object.values(locations))}
+            {renderList(Object.values(locations))}
           </ul>
           <h3 className="tracking-wider">My Projects</h3>
           <ul>
-            {renderList("My Projects", locations.work.children)}
+            {renderList(locations.work.children)}
           </ul>
         </div>
         <ul className="content max-sm:p-4 max-sm:grid max-sm:grid-cols-3 max-sm:gap-4 max-sm:h-full max-sm:overflow-y-auto max-sm:max-w-none">
