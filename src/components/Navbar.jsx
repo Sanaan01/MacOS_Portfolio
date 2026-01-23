@@ -1,8 +1,17 @@
 import dayjs from "dayjs";
+import { useEffect, useState } from "react";
 import {navIcons, navLinks} from "#constants/index.js";
 import useWindowStore from "#store/window.js";
 const Navbar = () => {
   const { openWindow, closeWindow, windows } = useWindowStore()
+  const [currentTime, setCurrentTime] = useState(dayjs());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(dayjs());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleIconClick = (id, img, event) => {
     if (id === 4) { // Control Center icon
@@ -46,7 +55,7 @@ const Navbar = () => {
                         </li>
                     ))}
                 </ul>
-                <time>{dayjs().format("ddd MMM D h:mm A")}</time>
+                <time>{currentTime.format("ddd MMM D h:mm A")}</time>
             </div>
         </nav>
     )

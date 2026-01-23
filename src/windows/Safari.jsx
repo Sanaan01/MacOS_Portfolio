@@ -46,7 +46,7 @@ const Safari = () => {
               <div className="content">
                 <p>{date}</p>
                 <h3 className="max-sm:text-base">{title}</h3>
-                <a href={link} target="_blank" rel="noopenernoreferrer">
+                <a href={link} target="_blank" rel="noopener noreferrer">
                   Check out the full post <MoveRight className="icon-hover"/>
                 </a>
 

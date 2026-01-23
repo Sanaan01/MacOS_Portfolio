@@ -1,5 +1,5 @@
 import useWindowStore from "#store/window.js";
-import {useEffect, useLayoutEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useGSAP} from "@gsap/react";
 import gsap from "gsap";
 import {Draggable} from "gsap/Draggable";
@@ -90,10 +90,11 @@ const WindowWrapper = (Component, windowKey) => {
       }
     }, [isFullscreen]);
 
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
       const handleResize = () => setIsMobile(window.innerWidth < 640);
+      handleResize();
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
     }, []);
