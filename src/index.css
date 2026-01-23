@@ -162,12 +162,12 @@ body {
     }
 
     #window-header {
-        @apply flex items-center justify-between px-4 py-3 rounded-t-lg bg-gray-50 dark:bg-[#323232] border-b border-gray-200 dark:border-zinc-700 select-none text-sm text-gray-400 dark:text-white;
+        @apply flex items-center justify-between px-4 py-3 rounded-t-lg bg-gray-50 dark:bg-[#323232] border-b border-gray-200 dark:border-zinc-700 select-none text-sm text-gray-400 dark:text-gray-300;
         @apply max-sm:px-2 max-sm:pt-12 max-sm:pb-4 max-sm:rounded-none max-sm:bg-white dark:max-sm:bg-black;
     }
 
     #safari {
-        @apply w-5xl h-[600px] absolute top-40 left-2/12 bg-white dark:bg-[#1e1e1e] shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+        @apply w-4xl absolute top-40 left-2/12 bg-white dark:bg-[#1e1e1e] shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
         @apply max-sm:fixed max-sm:inset-0 max-sm:w-full max-sm:h-full max-sm:rounded-none max-sm:top-0 max-sm:left-0 max-sm:z-[2000];
 
         .search {
@@ -212,7 +212,7 @@ body {
     }
 
     #terminal {
-        @apply w-2xl h-[500px] absolute top-32 left-1/12 bg-white dark:bg-[#1e1e1e] shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+        @apply w-xl absolute top-32 left-1/12 bg-white dark:bg-[#1e1e1e] shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
         @apply max-sm:fixed max-sm:inset-0 max-sm:w-full max-sm:h-full max-sm:rounded-none max-sm:top-0 max-sm:left-0 max-sm:z-[2000];
 
         h2 {
@@ -259,7 +259,7 @@ body {
     }
 
     #contact {
-        @apply w-2xl h-[450px] absolute top-60 left-10 sm:left-2/12 bg-white dark:bg-[#1e1e1e] shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+        @apply w-full max-w-2xl absolute top-60 left-10 sm:left-2/12 bg-white dark:bg-[#1e1e1e] shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
         @apply max-sm:fixed max-sm:inset-0 max-sm:max-w-none max-sm:w-full max-sm:h-full max-sm:rounded-none max-sm:top-0 max-sm:left-0 max-sm:z-[2000];
 
         h2 {
@@ -288,7 +288,7 @@ body {
     }
 
     #gallery {
-        @apply w-4xl h-[600px] absolute top-20 left-10 sm:left-20 bg-white dark:bg-[#1e1e1e] shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden flex flex-col;
+        @apply w-full max-w-3xl h-fit sm:h-[500px] absolute top-20 left-10 sm:left-20 bg-white dark:bg-[#1e1e1e] shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden flex flex-col;
         @apply max-sm:fixed max-sm:inset-0 max-sm:max-w-none max-sm:w-full max-sm:h-full max-sm:rounded-none max-sm:top-0 max-sm:left-0 max-sm:z-[2000];
 
         #window-header {
@@ -369,7 +369,7 @@ body {
     }
 
     #resume {
-        @apply w-3xl h-[600px] absolute top-16 left-7/12 bg-white dark:bg-[#1e1e1e] shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+        @apply w-fit h-fit absolute top-16 left-7/12 bg-white dark:bg-[#1e1e1e] shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
         @apply max-sm:fixed max-sm:inset-0 max-sm:w-full max-sm:h-full max-sm:rounded-none max-sm:top-0 max-sm:left-0 max-sm:z-[2000];
 
         #window-header {
@@ -380,7 +380,7 @@ body {
     }
 
     #finder {
-        @apply absolute w-4xl h-[500px] left-40 top-20 shadow-2xl drop-shadow-2xl overflow-hidden rounded-xl flex;
+        @apply absolute w-3xl left-40 top-20 shadow-2xl drop-shadow-2xl overflow-hidden rounded-xl flex;
         @apply max-sm:fixed max-sm:inset-0 max-sm:w-full max-sm:h-full max-sm:rounded-none max-sm:top-0 max-sm:left-0 max-sm:z-[2000] max-sm:flex-col;
 
         .sidebar {
@@ -437,7 +437,7 @@ body {
     }
 
     #txtfile {
-        @apply w-2xl h-[600px] absolute top-36 right-32 bg-white dark:bg-[#1e1e1e] shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+        @apply w-md absolute top-36 right-32 bg-white dark:bg-[#1e1e1e] shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
         @apply max-sm:fixed max-sm:inset-0 max-sm:w-full max-sm:h-full max-sm:rounded-none max-sm:top-0 max-sm:left-0 max-sm:z-[2000];
 
         h2 {
@@ -446,7 +446,7 @@ body {
     }
 
     #imgfile {
-        @apply w-3xl h-[600px] absolute top-40 left-2/12 bg-white dark:bg-[#1e1e1e] shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+        @apply w-xl absolute top-40 left-2/12 bg-white dark:bg-[#1e1e1e] shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
         @apply max-sm:fixed max-sm:inset-0 max-sm:w-full max-sm:h-full max-sm:rounded-none max-sm:top-0 max-sm:left-0 max-sm:z-[2000];
 
         #window-header {
