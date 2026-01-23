@@ -17,7 +17,7 @@ const ImageFile = () => {
         <h2>{name}</h2>
       </div>
 
-      <div className="p-5 bg-white h-[calc(100%-40px)] flex items-center justify-center">
+      <div className="p-5 bg-white dark:bg-[#1e1e1e] h-[calc(100%-40px)] flex items-center justify-center">
         <img 
           src={imageUrl} 
           alt={name}

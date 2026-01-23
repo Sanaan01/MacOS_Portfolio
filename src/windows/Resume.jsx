@@ -27,7 +27,7 @@ const Resume = () => {
         </a>
       </div>
 
-      <div className="bg-white h-[calc(100%-40px)] overflow-y-auto">
+      <div className="bg-white dark:bg-[#1e1e1e] h-[calc(100%-40px)] overflow-y-auto">
         <Document file="/files/resume.pdf">
           <Page
             pageNumber={1}

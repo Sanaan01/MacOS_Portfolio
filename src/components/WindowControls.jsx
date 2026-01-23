@@ -4,7 +4,7 @@ const WindowControls = ({target}) => {
   return (
     <div id="window-controls">
       <div className="close" onClick={() => closeWindow(target)}/>
-      <div className="minimize"/>
+      <div className="minimize" onClick={() => closeWindow(target)}/>
       <div className="maximize" onClick={() => toggleFullscreen(target)}/>
 
     </div>

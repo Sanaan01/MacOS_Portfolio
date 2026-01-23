@@ -23,7 +23,7 @@ const Gallery = () => {
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row w-full h-[calc(100%-40px)] bg-white overflow-hidden">
+      <div className="flex flex-col sm:flex-row w-full h-[calc(100%-40px)] bg-white dark:bg-[#1e1e1e] overflow-hidden">
         <div className="sidebar w-full sm:w-3/12 overflow-y-auto h-full">
           <h2>Gallery</h2>
 

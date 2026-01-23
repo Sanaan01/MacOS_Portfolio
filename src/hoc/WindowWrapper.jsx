@@ -9,7 +9,7 @@ const WindowWrapper = (Component, windowKey) => {
     const { isOpen, zIndex, isFullscreen} = windows[windowKey]
     const ref = useRef(null);
     const isFirstMount = useRef(true);
-    const posBeforeFullscreen = useRef({ x: 0, y: 0, width: 0, height: 0 });
+    const posBeforeFullscreen = useRef({ top: 0, left: 0, width: 0, height: 0, transform: "none" });
 
     useGSAP(() => {
       const el = ref.current;
@@ -81,7 +81,11 @@ const WindowWrapper = (Component, windowKey) => {
           transform: transform,
           duration: 0.3,
           ease: "power3.inOut",
-          clearProps: "top,left,width,height,transform,maxWidth,maxHeight,x,y"
+          clearProps: "top,left,width,height,maxWidth,maxHeight",
+          onComplete: () => {
+            const instance = Draggable.get(el);
+            if (instance) instance.update();
+          }
         });
       }
     }, [isFullscreen]);
