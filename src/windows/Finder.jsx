@@ -20,26 +20,20 @@ const Finder = () => {
   };
 
   const renderList = (name, items) => (
-    <div>
-      <h3>{name}</h3>
-
-    <ul>
-      {items.map((item) => (
-        <li
-          key={item.id}
-          onClick={() => setActiveLocation(item)}
-          className={clsx(
-            item.id === activeLocation.id ? "active" : "not-active",
-          )}
-        >
-          <img src={item.icon} className="w-4" alt={item.name}
-          />
-          <p className="text-sm font-medium truncate">{item.name}</p>
-        </li>
-      ))}
-    </ul>
-  </div>
-);
+    items.map((item) => (
+      <li
+        key={item.id}
+        onClick={() => setActiveLocation(item)}
+        className={clsx(
+          item.id === activeLocation.id ? "active" : "not-active",
+        )}
+      >
+        <img src={item.icon} className="w-4" alt={item.name}
+        />
+        <p className="text-sm font-medium truncate">{item.name}</p>
+      </li>
+    ))
+  );
 
   return (
     <>
@@ -48,20 +42,26 @@ const Finder = () => {
         <Search className="icon"/>
       </div>
 
-      <div className="bg-white dark:bg-[#1e1e1e] flex h-[calc(100%-40px)]">
+      <div className="bg-white dark:bg-[#1e1e1e] flex h-[calc(100%-40px)] max-sm:flex-col">
         <div className="sidebar">
-          {renderList("Favourites", Object.values(locations))}
-          {renderList("My Projects", locations.work.children)}
+          <h3 className="tracking-wider">Favourites</h3>
+          <ul>
+            {renderList("Favourites", Object.values(locations))}
+          </ul>
+          <h3 className="tracking-wider">My Projects</h3>
+          <ul>
+            {renderList("My Projects", locations.work.children)}
+          </ul>
         </div>
-        <ul className="content">
+        <ul className="content max-sm:p-4 max-sm:grid max-sm:grid-cols-3 max-sm:gap-4 max-sm:h-full max-sm:overflow-y-auto max-sm:max-w-none">
           {activeLocation.children.map((item) => (
             <li
               key={item.id}
-              className={item.position}
+              className={clsx(item.position, "max-sm:static max-sm:flex max-sm:flex-col max-sm:items-center max-sm:gap-2")}
               onClick={() => openItem(item)}
             >
-              <img src={item.icon} alt={item.name}/>
-              <p>{item.name}</p>
+              <img src={item.icon} alt={item.name} className="max-sm:size-12" />
+              <p className="max-sm:text-xs max-sm:w-full">{item.name}</p>
             </li>
           ))}
         </ul>
