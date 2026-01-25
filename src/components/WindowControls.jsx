@@ -1,6 +1,8 @@
 import useWindowStore from "#store/window.js";
 import { ChevronLeft } from "lucide-react";
 
+const BACK_BUTTON_CLASS = "hidden max-sm:flex items-center gap-1 text-blue-500 font-medium focus:outline-none";
+
 const WindowControls = ({ target }) => {
     const { closeWindow, toggleFullscreen } = useWindowStore();
 
@@ -25,7 +27,7 @@ const WindowControls = ({ target }) => {
             {target === "notfound" ? (
                 <a
                     href="/"
-                    className="hidden max-sm:flex items-center gap-1 text-blue-500 font-medium focus:outline-none"
+                    className={BACK_BUTTON_CLASS}
                 >
                     <ChevronLeft size={24} />
                     <span>Back</span>
@@ -33,7 +35,7 @@ const WindowControls = ({ target }) => {
             ) : (
                 <button
                     onClick={handleClose}
-                    className="hidden max-sm:flex items-center gap-1 text-blue-500 font-medium focus:outline-none"
+                    className={BACK_BUTTON_CLASS}
                 >
                     <ChevronLeft size={24} />
                     <span>Back</span>
