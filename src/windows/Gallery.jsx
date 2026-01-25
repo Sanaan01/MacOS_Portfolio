@@ -10,7 +10,9 @@ const Gallery = () => {
   const [activeCategory, setActiveCategory] = useState("Library");
 
   const filteredGallery = useMemo(() => {
-    return gallery.filter((item) => item.categories.includes(activeCategory));
+    const filtered = gallery.filter((item) => item.categories.includes(activeCategory));
+    // De-duplicate by image path to ensure no repeats in the grid
+    return Array.from(new Map(filtered.map(item => [item.img, item])).values());
   }, [activeCategory]);
 
   return (
