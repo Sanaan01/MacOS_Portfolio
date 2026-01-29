@@ -63,7 +63,7 @@ const Gallery = () => {
                       name: name || "Gallery Image",
                       icon: "/images/image.png",
                       kind: "file",
-                      filetype: "img",
+                      fileType: "img",
                       imageUrl: img,
                       thumbnail,
                     })
@@ -73,7 +73,10 @@ const Gallery = () => {
                     src={thumbnail}
                     alt={name || `Gallery Image ${id}`}
                     onError={(e) => {
-                      e.target.src = img;
+                      const target = e.currentTarget;
+                      if (target.dataset.fallbackApplied) return;
+                      target.dataset.fallbackApplied = "true";
+                      target.src = img;
                     }}
                   />
                 </li>

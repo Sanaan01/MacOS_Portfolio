@@ -18,9 +18,14 @@ const WindowControls = ({ target }) => {
         <>
             {/* Desktop Controls */}
             <div id="window-controls" className="max-sm:hidden">
-                <div className="close" onClick={handleClose} />
-                <div className="minimize" onClick={handleClose} />
-                <div className="maximize" onClick={() => toggleFullscreen(target)} />
+                <button type="button" className="close" onClick={handleClose} aria-label="Close window" />
+                <button type="button" className="minimize" onClick={handleClose} aria-label="Minimize window" />
+                <button
+                    type="button"
+                    className="maximize"
+                    onClick={() => toggleFullscreen(target)}
+                    aria-label="Toggle fullscreen"
+                />
             </div>
 
             {/* Mobile Back Button */}
