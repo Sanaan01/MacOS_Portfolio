@@ -1,5 +1,5 @@
 import { locations } from "#constants";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import {useGSAP} from "@gsap/react";
 import {Draggable} from "gsap/Draggable";
@@ -26,6 +26,7 @@ const Home = () => {
   const setActiveLocation = useLocationStore((state) => state.setActiveLocation);
   const openWindow = useWindowStore((state) => state.openWindow);
   const [isMobile, setIsMobile] = useState(false);
+  const draggableRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 640);
@@ -40,9 +41,18 @@ const Home = () => {
   };
 
   useGSAP(() => {
-    if (!isMobile) {
-      Draggable.create(".folder")
+    if (isMobile) {
+      draggableRef.current?.forEach((instance) => instance.kill());
+      draggableRef.current = null;
+      return;
     }
+
+    draggableRef.current = Draggable.create(".folder");
+
+    return () => {
+      draggableRef.current?.forEach((instance) => instance.kill());
+      draggableRef.current = null;
+    };
   }, [isMobile])
 
   return (

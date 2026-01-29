@@ -1,13 +1,13 @@
 import useWindowStore from "#store/window.js";
 import useThemeStore from "#store/theme.js";
-import { useEffect, useState, useRef } from "react";
+import { useRef } from "react";
 import clsx from "clsx";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Sun, Moon, Laptop } from "lucide-react";
 
 const ControlCenter = () => {
-  const { windows, closeWindow } = useWindowStore();
+  const { windows } = useWindowStore();
   const { isOpen, zIndex, data } = windows.controlcenter;
   const { theme, setTheme } = useThemeStore();
   const containerRef = useRef(null);

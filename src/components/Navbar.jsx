@@ -13,7 +13,7 @@ const Navbar = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleIconClick = (id, img, event) => {
+  const handleIconClick = (id, event) => {
     if (id === 4) { // Control Center icon
       if (windows.controlcenter.isOpen) {
         closeWindow("controlcenter");
@@ -39,9 +39,10 @@ const Navbar = () => {
 
                 <ul>
                     {navLinks.map(({id, name, type}) => (
-                        <li key={id} onClick={() => openWindow(type)}>
-                            <p>{name}</p>
-
+                        <li key={id}>
+                            <button type="button" onClick={() => openWindow(type)}>
+                                <p>{name}</p>
+                            </button>
                         </li>
                     ))}
                 </ul>
@@ -50,8 +51,10 @@ const Navbar = () => {
             <div>
                 <ul>
                     {navIcons.map(({id, img}) => (
-                        <li key={id} onClick={(e) => handleIconClick(id, img, e)}>
-                            <img src={img} className="icon" alt={`icon-${id}`}/>
+                        <li key={id}>
+                            <button type="button" onClick={(e) => handleIconClick(id, e)}>
+                                <img src={img} className="icon" alt={`icon-${id}`}/>
+                            </button>
                         </li>
                     ))}
                 </ul>
