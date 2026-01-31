@@ -11,6 +11,7 @@ const Gallery = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [galleryCategories, setGalleryCategories] = useState(galleryLinks);
 
   // Fetch images from R2 API on mount
   useEffect(() => {
@@ -34,6 +35,17 @@ const Gallery = () => {
         // Combine R2 images with static images (R2 first, then static)
         const r2Images = data.images || [];
         setImages([...r2Images, ...staticGallery]);
+
+        // Use dynamic categories if available, otherwise fallback to static
+        if (data.categories && data.categories.length > 0) {
+          // Transform to match galleryLinks structure
+          const dynamicCategories = data.categories.map((cat, idx) => ({
+            id: idx + 1,
+            icon: cat.icon || '/icons/folder.svg',
+            title: cat.title,
+          }));
+          setGalleryCategories(dynamicCategories);
+        }
       } catch (err) {
         console.error('Gallery fetch error:', err);
         setError(err.message);
@@ -69,7 +81,7 @@ const Gallery = () => {
           <h2 className="max-sm:hidden tracking-wider">Gallery</h2>
 
           <ul className="flex sm:flex-col p-2 gap-2">
-            {galleryLinks.map(({ id, icon, title }) => (
+            {galleryCategories.map(({ id, icon, title }) => (
               <li
                 key={id}
                 onClick={() => setActiveCategory(title)}
