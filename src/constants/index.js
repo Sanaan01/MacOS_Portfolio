@@ -204,7 +204,7 @@ const gallery = [
     {
         id: 4,
         name: "cave.JPG",
-        img: "https://assets.sanaan.dev/macos-portfolio/cave.JPG",
+        img: "https://assets.sanaan.dev/constants/cave.JPG",
         thumbnail: "/images/thumbnails/cave.webp",
         categories: ["Library", "Cappadocia"],
     },
