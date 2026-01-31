@@ -167,16 +167,11 @@ const galleryLinks = [
     },
     {
         id: 3,
-        icon: "/icons/file.svg",
-        title: "Qatar",
-    },
-    {
-        id: 4,
         icon: "/icons/gicon4.svg",
         title: "People",
     },
     {
-        id: 5,
+        id: 4,
         icon: "/icons/gicon5.svg",
         title: "Favorites",
     },
