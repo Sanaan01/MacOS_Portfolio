@@ -357,29 +357,37 @@ body {
             @apply p-5 flex-1 overflow-y-auto;
 
             &>ul {
-                @apply grid grid-cols-2 sm:grid-cols-5 gap-2.5 grid-flow-dense;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
 
                 li {
-                    @apply min-h-[100px];
+                    @apply overflow-hidden rounded-lg cursor-pointer transition-transform hover:scale-[1.02];
 
                     img {
-                        @apply size-full object-cover rounded-lg;
+                        @apply w-full h-full object-cover;
                     }
 
+                    /* Row 1: Landscape (2 cols) + Portrait (1 col) */
                     &:nth-child(4n + 1) {
-                        @apply col-span-2 row-span-2 sm:col-span-3 sm:row-span-3;
+                        grid-column: span 2;
+                        aspect-ratio: 16 / 10.35;
                     }
 
                     &:nth-child(4n + 2) {
-                        @apply col-span-1 row-span-2 sm:col-span-2 sm:row-span-3;
+                        grid-column: span 1;
+                        aspect-ratio: 3 / 4;
                     }
 
+                    /* Row 2: Portrait (1 col) + Landscape (2 cols) - FLIPPED */
                     &:nth-child(4n + 3) {
-                        @apply col-span-2 row-span-1 sm:col-span-3 sm:row-span-2;
+                        grid-column: span 1;
+                        aspect-ratio: 3 / 4;
                     }
 
                     &:nth-child(4n + 4) {
-                        @apply col-span-1 row-span-1 sm:col-span-2 sm:row-span-2;
+                        grid-column: span 2;
+                        aspect-ratio: 16 / 10.35;
                     }
                 }
             }

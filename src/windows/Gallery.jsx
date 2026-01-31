@@ -99,7 +99,7 @@ const Gallery = () => {
 
           {/* Gallery Grid - PRESERVED EXACT LAYOUT */}
           {!loading && (
-            <ul className="h-fit grid grid-cols-2 sm:grid-cols-5 gap-2.5 grid-flow-dense">
+            <ul>
               {filteredGallery.map(({ id, img, name, thumbnail: customThumbnail }) => {
                 // Use provided thumbnail, or fallback to local thumbnail path, or original
                 const thumbnail = customThumbnail || img.replace("/images/", "/images/thumbnails/").replace(/\.[^/.]+$/, ".webp");
