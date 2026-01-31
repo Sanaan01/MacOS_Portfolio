@@ -91,8 +91,20 @@ export async function onRequest(context) {
             return dateB - dateA;
         });
 
+        // Try to get categories from R2 metadata
+        let categories = null;
+        try {
+            const categoriesObj = await env.MY_BUCKET.get('_meta/categories.json');
+            if (categoriesObj) {
+                const categoriesData = await categoriesObj.json();
+                categories = categoriesData.categories;
+            }
+        } catch (e) {
+            console.error('Error fetching categories:', e);
+        }
+
         return new Response(
-            JSON.stringify({ images }),
+            JSON.stringify({ images, categories }),
             {
                 headers: {
                     'Content-Type': 'application/json',
