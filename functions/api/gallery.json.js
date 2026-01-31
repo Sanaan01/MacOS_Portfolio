@@ -1,50 +1,42 @@
-import { S3Client, ListObjectsV2Command, HeadObjectCommand } from '@aws-sdk/client-s3';
-
 /**
  * Cloudflare Pages Function to list gallery images from R2
- * Returns JSON with image metadata and Cloudflare Image Resizing URLs
+ * Uses R2 Binding (no AWS SDK needed!)
+ * 
+ * Required bindings (configure in Cloudflare Dashboard → Settings → Functions → R2 bucket bindings):
+ * - MY_BUCKET: R2 bucket binding
+ * 
+ * Required environment variables:
+ * - R2_PUBLIC_URL: Public URL for R2 bucket (e.g., https://assets.sanaan.dev)
+ * - R2_PATH_PREFIX: Optional folder prefix (e.g., macos-portfolio/)
  */
 export async function onRequest(context) {
     const { env } = context;
 
-    // Validate environment variables
-    const required = ['R2_ACCOUNT_ID', 'R2_ACCESS_KEY_ID', 'R2_SECRET_ACCESS_KEY', 'R2_BUCKET_NAME', 'R2_PUBLIC_URL'];
-    const missing = required.filter(key => !env[key]);
-
-    if (missing.length > 0) {
+    // Check for R2 binding
+    if (!env.MY_BUCKET) {
         return new Response(
-            JSON.stringify({ error: `Missing environment variables: ${missing.join(', ')}` }),
-            {
-                status: 500,
-                headers: { 'Content-Type': 'application/json' }
-            }
+            JSON.stringify({ error: 'R2 bucket binding (MY_BUCKET) not configured' }),
+            { status: 500, headers: { 'Content-Type': 'application/json' } }
         );
     }
 
-    // Create S3 client for R2
-    const client = new S3Client({
-        region: 'auto',
-        endpoint: `https://${env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-        credentials: {
-            accessKeyId: env.R2_ACCESS_KEY_ID,
-            secretAccessKey: env.R2_SECRET_ACCESS_KEY,
-        },
-    });
+    // Check for public URL
+    if (!env.R2_PUBLIC_URL) {
+        return new Response(
+            JSON.stringify({ error: 'R2_PUBLIC_URL environment variable not set' }),
+            { status: 500, headers: { 'Content-Type': 'application/json' } }
+        );
+    }
 
     try {
-        // List all objects in the bucket (optionally filtered by prefix)
-        const listCommand = new ListObjectsV2Command({
-            Bucket: env.R2_BUCKET_NAME,
-            Prefix: env.R2_PATH_PREFIX || '', // Filter by folder if specified
-        });
-
-        const listResponse = await client.send(listCommand);
-        const objects = listResponse.Contents || [];
+        // List objects in bucket with optional prefix
+        const prefix = env.R2_PATH_PREFIX || '';
+        const listed = await env.MY_BUCKET.list({ prefix });
 
         // Filter for image files only
         const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.avif'];
-        const imageObjects = objects.filter(obj => {
-            const key = obj.Key.toLowerCase();
+        const imageObjects = (listed.objects || []).filter(obj => {
+            const key = obj.key.toLowerCase();
             return imageExtensions.some(ext => key.endsWith(ext));
         });
 
@@ -52,43 +44,38 @@ export async function onRequest(context) {
         const images = await Promise.all(
             imageObjects.map(async (obj) => {
                 try {
-                    // Get object metadata
-                    const headCommand = new HeadObjectCommand({
-                        Bucket: env.R2_BUCKET_NAME,
-                        Key: obj.Key,
-                    });
-
-                    const headResponse = await client.send(headCommand);
-                    const metadata = headResponse.Metadata || {};
+                    // Get object with metadata using head()
+                    const headResult = await env.MY_BUCKET.head(obj.key);
+                    const customMetadata = headResult?.customMetadata || {};
 
                     // Parse categories from metadata
-                    const categories = metadata.categories
-                        ? metadata.categories.split(',').map(c => c.trim())
+                    const categories = customMetadata.categories
+                        ? customMetadata.categories.split(',').map(c => c.trim())
                         : ['Library'];
 
                     // Construct URLs
-                    const fullUrl = `${env.R2_PUBLIC_URL}/${obj.Key}`;
+                    const fullUrl = `${env.R2_PUBLIC_URL}/${obj.key}`;
                     // Cloudflare Image Resizing URL for thumbnails
                     const thumbnailUrl = `https://sanaan.dev/cdn-cgi/image/width=300,height=300,fit=cover,quality=85/${fullUrl}`;
 
                     // Extract filename from key
-                    const name = obj.Key.split('/').pop();
+                    const name = obj.key.split('/').pop();
 
                     return {
-                        id: obj.Key,
+                        id: obj.key,
                         name,
                         img: fullUrl,
                         thumbnail: thumbnailUrl,
                         categories,
-                        uploadedAt: metadata.uploadedat || obj.LastModified?.toISOString(),
+                        uploadedAt: customMetadata.uploadedAt || obj.uploaded?.toISOString(),
                     };
                 } catch (err) {
-                    console.error(`Error getting metadata for ${obj.Key}:`, err);
+                    console.error(`Error getting metadata for ${obj.key}:`, err);
                     // Return with default categories if metadata fetch fails
-                    const fullUrl = `${env.R2_PUBLIC_URL}/${obj.Key}`;
+                    const fullUrl = `${env.R2_PUBLIC_URL}/${obj.key}`;
                     return {
-                        id: obj.Key,
-                        name: obj.Key.split('/').pop(),
+                        id: obj.key,
+                        name: obj.key.split('/').pop(),
                         img: fullUrl,
                         thumbnail: `https://sanaan.dev/cdn-cgi/image/width=300,height=300,fit=cover,quality=85/${fullUrl}`,
                         categories: ['Library'],
@@ -118,10 +105,7 @@ export async function onRequest(context) {
         console.error('Error listing R2 objects:', error);
         return new Response(
             JSON.stringify({ error: 'Failed to list gallery images', details: error.message }),
-            {
-                status: 500,
-                headers: { 'Content-Type': 'application/json' }
-            }
+            { status: 500, headers: { 'Content-Type': 'application/json' } }
         );
     }
 }
