@@ -1,24 +1,24 @@
 import useWindowStore from "#store/window.js";
-import {useEffect, useRef, useState} from "react";
-import {useGSAP} from "@gsap/react";
+import { useEffect, useRef, useState } from "react";
+import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import {Draggable} from "gsap/Draggable";
+import { Draggable } from "gsap/Draggable";
 const WindowWrapper = (Component, windowKey) => {
   const Wrapped = (props) => {
     const { focusWindow, windows } = useWindowStore()
-    const { isOpen, zIndex, isFullscreen} = windows[windowKey]
+    const { isOpen, zIndex, isFullscreen } = windows[windowKey]
     const ref = useRef(null);
     const isFirstMount = useRef(true);
     const posBeforeFullscreen = useRef({ top: 0, left: 0, width: 0, height: 0, transform: "none" });
 
     useGSAP(() => {
       const el = ref.current;
-      if(!el) return;
+      if (!el) return;
 
       if (isOpen) {
         el.style.display = "block"
         if (!isFullscreen) {
-          gsap.fromTo(el, { scale:0.8, opacity: 0, y:40}, {scale: 1, opacity: 1, y: 0, duration: 0.2, ease: "power3.out" })
+          gsap.fromTo(el, { scale: 0.8, opacity: 0, y: 40 }, { scale: 1, opacity: 1, y: 0, duration: 0.2, ease: "power3.out" })
         }
       } else {
         if (isFirstMount.current) {
@@ -101,9 +101,9 @@ const WindowWrapper = (Component, windowKey) => {
 
     useGSAP(() => {
       const el = ref.current;
-      if(!el) return;
+      if (!el) return;
 
-      const [instance] = Draggable.create(el, { 
+      const [instance] = Draggable.create(el, {
         onPress: () => focusWindow(windowKey),
         activeCursor: "grabbing",
       })
